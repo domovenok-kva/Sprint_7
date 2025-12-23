@@ -9,4 +9,4 @@ def curier_api():
 
 @pytest.fixture()
 def order_api():
-    yield OrderAPI()
+    return OrderAPI()
