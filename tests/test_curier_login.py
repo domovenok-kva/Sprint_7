@@ -1,5 +1,6 @@
 import pytest
 import allure
+from data_for_test.data_for_test import ErrorNames
 
 class TestCurierLogin:
 
@@ -20,7 +21,7 @@ class TestCurierLogin:
         payload[inpt] = 'invalid_data'
         response = curier_api.login_curier_rqst(payload)
         assert response.status_code  == 404
-        assert response.json()['message'] == 'Учетная запись не найдена'
+        assert response.json()['message'] == ErrorNames.accaunt_data_not_exist_err
 
     @allure.step("Тест если какого-то поля нет, запрос возвращает ошибку")
     @pytest.mark.parametrize('inpt', ["login", "password"])
@@ -30,7 +31,7 @@ class TestCurierLogin:
         payload[inpt] = ''
         response = curier_api.login_curier_rqst(payload)
         assert response.status_code  == 400
-        assert response.json()['message'] == 'Недостаточно данных для входа'
+        assert response.json()['message'] == ErrorNames.not_enough_data_for_login_err
 
     @allure.step("Тест если авторизоваться под несуществующим пользователем, запрос возвращает ошибку")
     def test_curier_auth_user_not_exist(self, curier_api):
@@ -39,7 +40,7 @@ class TestCurierLogin:
         payload = curier_api.not_existed_curier_login(login, password)
         response = curier_api.login_curier_rqst(payload)
         assert response.status_code  == 404
-        assert response.json()['message'] == 'Учетная запись не найдена'
+        assert response.json()['message'] == ErrorNames.accaunt_data_not_exist_err
 
 
         

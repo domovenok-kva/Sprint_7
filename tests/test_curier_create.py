@@ -1,6 +1,6 @@
 import pytest
 import allure
-
+from data_for_test.data_for_test import ErrorNames
 
 class TestCurierCreation:
 
@@ -19,7 +19,7 @@ class TestCurierCreation:
         response = curier_api.create_curier_rqst(payload)
         response = curier_api.create_curier_rqst(payload)
         assert response.status_code  == 409
-        assert response.json()['message'] == 'Этот логин уже используется. Попробуйте другой.'
+        assert response.json()['message'] == ErrorNames.duplicate_login_err
 
 
     @allure.step("Тест если одного из полей нет, запрос возвращает ошибку")
@@ -29,7 +29,7 @@ class TestCurierCreation:
         payload[inpt] = ''
         response = curier_api.create_curier_rqst(payload)
         assert response.status_code  == 400
-        assert response.json()['message'] == 'Недостаточно данных для создания учетной записи'
+        assert response.json()['message'] == ErrorNames.not_enough_data_for_creation_err
 
     @allure.step("Тест если создать пользователя с логином, который уже есть, возвращается ошибка")
     def test_create_curier_with_exist_login(self, curier_api):
@@ -39,6 +39,6 @@ class TestCurierCreation:
         curier_nmbr_two['login'] = curier_nmbr_one['login']
         response = curier_api.create_curier_rqst(curier_nmbr_two)
         assert response.status_code  == 409
-        assert response.json()['message'] == 'Этот логин уже используется. Попробуйте другой.'
+        assert response.json()['message'] == ErrorNames.duplicate_login_err
 
 

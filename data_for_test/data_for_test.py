@@ -20,3 +20,9 @@ class MyOrder:
          ]
     }
 
+class ErrorNames:
+    duplicate_login_err = 'Этот логин уже используется. Попробуйте другой.'
+    not_enough_data_for_creation_err = 'Недостаточно данных для создания учетной записи'
+    accaunt_data_not_exist_err = 'Учетная запись не найдена'
+    not_enough_data_for_login_err = 'Недостаточно данных для входа'
+
